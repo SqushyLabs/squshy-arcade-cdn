@@ -20,5 +20,5 @@ jobs:
             git config --global user.name "sqush.bot"
             git config --global credential.helper cache
             git add .
-            git commit -m "Automated update: reformatting files for c3 - $(date)"
-            git push
+            git commit -m "Automated reformat for c3" || echo "No changes to commit"
+            git push || echo "No changes to push"
