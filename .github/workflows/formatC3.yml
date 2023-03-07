@@ -1,0 +1,24 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+jobs:
+  c3_files_cleanup:
+    if: github.event.pull_request.merged == false
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@master
+        - uses: actions/setup-python@v4
+          with:
+            python-version: '3.10'
+          env:
+              ACCESS_TOKEN: '${{ secrets.ACCESS_TOKEN }}'
+        - run: python .github/workflows/formatC3.py --version ${{ github.sha }}
+        - run: |
+            git config --global user.email "sqush.bot@squshy.co"
+            git config --global user.name "sqush.bot"
+            git config --global credential.helper cache
+            git add .
+            git commit -m "Automated update: reformatting files for c3 - $(date)"
+            git push
