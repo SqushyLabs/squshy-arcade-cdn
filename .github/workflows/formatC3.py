@@ -56,6 +56,6 @@ if __name__ == '__main__':
             project=main_file.parent.stem,
             version=args.version,
             runtime_file=main_file,
-            search_text="script/c3runtime.js",
+            search_text="scripts/c3runtime.js",
             replace_text="squshy.arcade.getC3File('scripts/c3runtime.js')"
         )
