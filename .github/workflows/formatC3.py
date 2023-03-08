@@ -47,7 +47,7 @@ if __name__ == '__main__':
             project=runtime.parent.stem,
             version=args.version,
             runtime_file=runtime,
-            search_text="data.json",
+            search_text='"data.json"',
             replace_text="squshy.arcade.getC3File('data.json')"
         )
     main_files = [x for x in Path("./").resolve().rglob("main.js")]
@@ -56,6 +56,6 @@ if __name__ == '__main__':
             project=main_file.parent.stem,
             version=args.version,
             runtime_file=main_file,
-            search_text="scripts/c3runtime.js",
+            search_text='"scripts/c3runtime.js"',
             replace_text="squshy.arcade.getC3File('scripts/c3runtime.js')"
         )
