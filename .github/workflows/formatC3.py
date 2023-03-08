@@ -50,6 +50,13 @@ if __name__ == '__main__':
             search_text='"data.json"',
             replace_text="squshy.arcade.getC3File('data.json')"
         )
+        format_file(
+            project=runtime.parent.stem,
+            version=args.version,
+            runtime_file=runtime,
+            search_text='console.info("Made with Construct, the game and app creator :: https://www.construct.net")',
+            replace_text="squshy.arcade.gameLoaded()"
+        )
     main_files = [x for x in Path("./").resolve().rglob("main.js")]
     for main_file in main_files:
         format_file(
