@@ -19,15 +19,15 @@ def format_data_json(project, version, json_file):
         text_file.write(data)
 
 
-def format_runtimes(project, version, runtime_file):
+def format_file(project, version, runtime_file, search_text, replace_text):
     print(f"Updating {runtime_file} for {project} @ {version}")
     with open(runtime_file, 'r') as file:
         data = file.read()
 
-    if "squshy.arcade.getC3Data" in data:
+    if replace_text in data:
         return
 
-    data = data.replace('"data.json"', "squshy.arcade.getC3Data()")
+    data = data.replace(search_text, replace_text)
 
     with open(runtime_file, "w") as text_file:
         text_file.write(data)
@@ -43,4 +43,19 @@ if __name__ == '__main__':
 
     runtimes = [x for x in Path("./").resolve().rglob("*c3runtime.js")]
     for runtime in runtimes:
-        format_runtimes(runtime.parent.stem, args.version, runtime)
+        format_file(
+            project=runtime.parent.stem,
+            version=args.version,
+            runtime_file=runtime,
+            search_text="data.json",
+            replace_text="squshy.arcade.getC3File('data.json')"
+        )
+    main_files = [x for x in Path("./").resolve().rglob("main.js")]
+    for main_file in main_files:
+        format_file(
+            project=main_file.parent.stem,
+            version=args.version,
+            runtime_file=main_file,
+            search_text="script/c3runtime.js",
+            replace_text="squshy.arcade.getC3File('scripts/c3runtime.js')"
+        )
