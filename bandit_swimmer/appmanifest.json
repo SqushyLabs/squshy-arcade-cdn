@@ -1,0 +1,10 @@
+{
+	"name": "Bandits Endless Swimmer",
+	"short_name": "Bandits Endless Swimmer",
+	"description": "Endles Runner Game",
+	"start_url": "index.html",
+	"display": "fullscreen",
+	"orientation": "landscape",
+	"background_color": "#ffffff",
+	"icons": []
+}
