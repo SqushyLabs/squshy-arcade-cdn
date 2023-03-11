@@ -41,28 +41,27 @@ if __name__ == '__main__':
     for data_file in data_jsons:
         format_data_json(data_file.parent.stem, args.version, data_file)
 
-    runtimes = [x for x in Path("./").resolve().rglob("*c3runtime.js")]
-    for runtime in runtimes:
-        format_file(
-            project=runtime.parent.stem,
-            version=args.version,
-            runtime_file=runtime,
-            search_text='"data.json"',
-            replace_text="squshy.arcade.getC3File('data.json')"
-        )
-        format_file(
-            project=runtime.parent.stem,
-            version=args.version,
-            runtime_file=runtime,
-            search_text='console.info("Made with Construct, the game and app creator :: https://www.construct.net")',
-            replace_text="squshy.arcade.gameLoaded()"
-        )
-    main_files = [x for x in Path("./").resolve().rglob("main.js")]
-    for main_file in main_files:
-        format_file(
-            project=main_file.parent.stem,
-            version=args.version,
-            runtime_file=main_file,
-            search_text='"scripts/c3runtime.js"',
-            replace_text="squshy.arcade.getC3File('scripts/c3runtime.js')"
-        )
+    files_to_format = [
+        'c3runtime.js', 'main.js', 'register-sw.js'
+    ]
+
+    search_replace = {
+        '"data.json"': "squshy.arcade.getC3File('data.json')",
+        '"scripts/c3runtime.js"': "squshy.arcade.getC3File('scripts/c3runtime.js')",
+        '"sw.js"': "squshy.arcade.getC3File('sw.js')",
+        'workerMainUrl:"workermain.js"': "workerMainUrl:squshy.arcade.getC3File('workermain.js')",
+        'this._GetWorkerScriptFolder()': "squshy.arcade.getC3File('scripts/')",
+        'console.info("Made with Construct, the game and app creator :: https://www.construct.net")': "squshy.arcade.gameLoaded()"
+    }
+
+    for file in files_to_format:
+        found_files = [x for x in Path("./").resolve().rglob(f"*{file}")]
+        for found_file in found_files:
+            for search, replace in search_replace.items():
+                format_file(
+                    project=found_file.parent.stem,
+                    version=args.version,
+                    runtime_file=found_file,
+                    search_text=search,
+                    replace_text=replace
+                )
