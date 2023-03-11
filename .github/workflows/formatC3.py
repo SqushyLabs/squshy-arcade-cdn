@@ -48,7 +48,6 @@ if __name__ == '__main__':
     search_replace = {
         '"data.json"': "squshy.arcade.getC3File('data.json')",
         '"scripts/c3runtime.js"': "squshy.arcade.getC3File('scripts/c3runtime.js')",
-        '"sw.js"': "squshy.arcade.getC3File('sw.js')",
         'workerMainUrl:"workermain.js"': "workerMainUrl:squshy.arcade.getC3File('workermain.js')",
         'this._GetWorkerScriptFolder()': "squshy.arcade.getC3File('scripts/')",
         'console.info("Made with Construct, the game and app creator :: https://www.construct.net")': "squshy.arcade.gameLoaded()"
