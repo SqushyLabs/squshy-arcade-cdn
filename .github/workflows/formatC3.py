@@ -15,7 +15,6 @@ def format_data_json(project, version, json_file):
     for folder in sub_folders:
         data = re.sub(fr'"{folder}/(.*?)"', fr'"https://cdn.jsdelivr.net/gh/SqushyLabs/squshy-arcade-cdn@{version}/{project}/{folder}/\1"', data)
 
-    data = data.replace(" ", '')
     with open(json_file, "w") as text_file:
         text_file.write(data)
 
